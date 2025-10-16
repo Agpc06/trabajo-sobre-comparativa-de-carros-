@@ -1,113 +1,12 @@
----
-title: "Análisis comparativo de la relación calidad-precio en vehículos por tipo de
-  motorización: eléctrico, híbrido y de combustible en el mercado global 2025"
-author: "Angel"
-date: "2025-10-16"
+--- 
+title: "Analisis Comparativo de la Relación Calidad-precio en Vehículos por Tipo de
+  Motorización: Eléctrico, Hibrido y de Combustible en el Mercado Global 2025"
+author: "Ángel Pastrano y Valeria Barreto"
+date: "2025-10-14"
 output: html_document
----
-```{r load_data, include=FALSE}
-ruta_data_carros<- file.choose()
-data_carros <- read.csv("C:\\Users\\elang\\Documents\\Proyecto final\\Cars Datasets 2025.csv")
-```
+---  
 
-```{r librerias, include=FALSE}
+```{r}
 library(dplyr)
-library(stringr)
-library(ggplot2)
 ```
 
-```{r TOP_10_QPR}
-# Limpieza, Conversión y Cálculo
-data_qpr <- data_carros %>%
-  # Limpieza del Precio 
-  mutate(
-    # Quitar símbolos
-    Price_Clean = str_replace_all(Cars.Prices, "[$, ]|approx", ""),
-    
-    # Manejar rangos: si hay '-', calcula el promedio; si no, agarra el valor
-    Price_Avg = case_when(
-      str_detect(Price_Clean, "-") ~ {
-        prices <- str_split(Price_Clean, "-")[[1]]
-        mean(as.numeric(prices), na.rm = TRUE)
-      },
-      TRUE ~ as.numeric(Price_Clean)
-    )
-  ) %>%
-  # Limpieza del Rendimiento (Potencia, Velocidad, Aceleración)
-  mutate(
-    # Extraer solo el primer valor numérico de cada columna
-    HP_Clean = as.numeric(str_extract(HorsePower, "^[0-9.]+")),
-    Speed_Clean = as.numeric(str_extract(Total.Speed, "^[0-9.]+")),
-    Accel_Clean = as.numeric(str_extract(Performance.0...100..KM.H, "^[0-9.]+|\\d"))
-  ) %>%
-  
-  # Eliminar filas con valores faltantes después de la limpieza
-  filter(!is.na(Price_Avg) & !is.na(HP_Clean) & !is.na(Speed_Clean) & !is.na(Accel_Clean) & Price_Avg > 0) %>%
-  
-  # Quality Index = HP + Speed - (10 * Acceleration)
-  mutate(
-    Quality_Index = HP_Clean + Speed_Clean - (10 * Accel_Clean)
-  ) %>%
-  
-
-  # QPR = (Quality Index / Price_Avg) * 1000 (Puntos de Calidad por cada $1000 USD)
-  mutate(
-    QPR = (Quality_Index / Price_Avg) * 1000
-  )
-
-#  Clasificación y Top 10
-top_10_qpr <- data_qpr %>%
-  arrange(desc(QPR)) %>%
-  select(Company.Names, Cars.Names, Fuel.Types, Price_Avg, Quality_Index, QPR) %>%
-  head(10)
-
-# Renombrar columnas 
-names(top_10_qpr) <- c("Fabricante", "Modelo", "Motorización", "Precio Promedio (USD)", "Índice de Calidad", "Relación QPR (Puntos/1k USD)")
-
-# mostramos el Top 10
-print(top_10_qpr)
-```
-
-```{r TOP_10_QPR_GRAFICO}
-# Grafico del top 10
-
-top_10_plot <- top_10_qpr %>%
-  # USAMOS COMILLAS INVERTIDAS (` `) para llamar a la columna
-  arrange(`Relación QPR (Puntos/1k USD)`) %>% 
-  
-  # columna de etiqueta combinada
-  mutate(Label = factor(paste(Fabricante, Modelo), 
-                        levels = paste(Fabricante, Modelo)))
-
-# gráfico de barras
-grafico_qpr <- ggplot(top_10_plot, aes(x = Label, y = `Relación QPR (Puntos/1k USD)`, fill = Motorización)) +
-  geom_bar(stat = "identity", color = "black", width = 0.7) +
-  
-  # etiquetas de valor
-  geom_text(aes(label = sprintf("%.2f", `Relación QPR (Puntos/1k USD)`)), 
-            hjust = -0.1, size = 3.5, fontface = "bold") +
-  
-  # estética y etiquetas
-  labs(title = "Top 10: Análisis Comparativo de la Relación Calidad-Precio (QPR)",
-       subtitle = "Puntos de Calidad por cada $1000 USD (Mercado Global 2025)",
-       x = "Vehículo (Fabricante y Modelo)",
-       y = "Relación Calidad-Precio (QPR)") +
-  
-  # Invertir coordenadas para un gráfico más legible
-  coord_flip() +
-  
-  # colores y el tema del grafico
-  scale_fill_manual(values = c("Petrol" = "#FFD700", "Hybrid" = "#1E90FF", "Diesel" = "#A9A9A9", "plug in hyrbrid" = "#00BFFF")) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0, size = 16, face = "bold"),
-    plot.subtitle = element_text(hjust = 0, size = 12),
-    axis.text.y = element_text(size = 10, face = "bold"),
-    axis.title.x = element_text(margin = margin(t = 10)),
-    legend.position = "bottom"
-  )
-
-# el gráfico
-print(grafico_qpr)
-
-```
