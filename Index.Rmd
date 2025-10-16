@@ -1,10 +1,12 @@
----
+--- 
 title: "Analisis Comparativo de la Relación Calidad-precio en Vehículos por Tipo de
   Motorización: Eléctrico, Hibrido y de Combustible en el Mercado Global 2025"
 author: "Ángel Pastrano y Valeria Barreto"
 date: "2025-10-14"
 output: html_document
----
+---  
 
-
+```{r}
+library(dplyr)
+```
 
