@@ -1,7 +1,7 @@
 ---
 title: "Análisis comparativo de la relación calidad-precio en vehículos por tipo de
   motorización: eléctrico, híbrido y de combustible en el mercado global 2025"
-author: "Angel"
+author: "Angel Pastrano y Valeria Barreto"
 date: "2025-10-16"
 output: html_document
 ---
@@ -161,7 +161,67 @@ print(grafico_qpr)
 ```
 
 
-#COMPARATIVA POR MARCAS
+# COMPARATIVA POR MARCAS
+
+Bloque de Comparativa y Promedios por Marca
+
+Este bloque calcula el QPR promedio, el precio promedio y el número de modelos por cada fabricante, y selecciona las 10 marcas con mejor QPR.
+
+```{r brand_comparison}
+# Agrupamos los datos por Fabricante y calculamos los promedios
+brand_qpr_summary <- data_qpr %>%
+  group_by(Company.Names) %>%
+  summarise(
+    Modelos = n(),
+    QPR_Promedio = mean(QPR, na.rm = TRUE),
+    Precio_Promedio_USD = mean(Price_Avg, na.rm = TRUE)
+  ) %>%
+  # Filtramos solo las marcas con más de un modelo para un análisis robusto
+  filter(Modelos >= 2) %>%
+  # Ordenamos por el QPR Promedio de forma descendente
+  arrange(desc(QPR_Promedio)) %>%
+  head(10) %>%
+  rename(Fabricante = Company.Names)
+
+# Mostramos la tabla resumen de las 10 mejores marcas
+print(brand_qpr_summary)
+
+
+# Gráfico de QPR Promedio por Marca
+
+```{r plot_brand_qpr}
+# Preparamos los datos para el gráfico, ordenando las marcas para la visualización
+brand_plot <- brand_qpr_summary %>%
+  arrange(QPR_Promedio) %>%
+  mutate(Fabricante = factor(Fabricante, levels = Fabricante))
+
+# Generación del gráfico de barras horizontal
+grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
+  geom_bar(stat = "identity", fill = "#1E90FF", color = "black", width = 0.7) +
+  
+  # Añadir etiquetas de valor
+  geom_text(aes(label = sprintf("%.2f", QPR_Promedio)), 
+            hjust = -0.1, size = 4, fontface = "bold") +
+  
+  # Mejorar la estética y etiquetas
+  labs(title = "Top 10: Relación Calidad-Precio Promedio por Marca",
+       subtitle = "Basado en el QPR promedio de todos sus modelos (solo marcas con >= 2 modelos)",
+       x = "Fabricante",
+       y = "QPR Promedio (Puntos/1k USD)") +
+  
+  # Invertir coordenadas para un gráfico de barras horizontal más legible
+  coord_flip() +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0, size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0, size = 12),
+    axis.text.y = element_text(size = 10, face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10))
+  )
+
+# Mostrar el gráfico
+print(grafico_marcas)
 
 
 
