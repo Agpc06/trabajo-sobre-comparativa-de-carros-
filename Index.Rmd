@@ -3,25 +3,52 @@ title: "Análisis comparativo de la relación calidad-precio en vehículos por t
   motorización: eléctrico, híbrido y de combustible en el mercado global 2025"
 author: "Angel Pastrano y Valeria Barreto"
 date: "2025-10-16"
-output: html_document
+output:
+   html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: hide
 ---
 ```{r load_data, include=FALSE}
-ruta_data_carros<- file.choose()
-data_carros <- read.csv("C:\\Users\\elang\\Documents\\Proyecto final\\Cars Datasets 2025.csv")
+# ruta para que funcione desde posit y RStudio
+library(readr)
+library(here)
+ruta <- here("data", "Cars Datasets 2025.csv")
+data_carros <- read.csv(ruta)
 ```
 
 ```{r librerias, include=FALSE}
 library(dplyr)
 library(stringr)
 library(ggplot2)
+library(here)
 ```
-#INTRODUCCION
+# **Introducción**
 
 
-#METODOLOGIA
+# **Planteamiento del problema**
 
+La industria automotriz está en una transición. Los vehículos eléctricos e híbridos han crecido en popularidad, pero a menudo se perciben como opciones más caras. Esta percepción plantea una pregunta crítica para los consumidores: ¿Cuál de las tres principales tecnologías de motorización _(eléctrico, híbrido o de combustible fósil)_ ofrece la mejor relación calidad-precio, considerando el rendimiento del motor frente a su costo de compra inicial?
 
-#ANALISIS POR SEGMENTOS
+## **Objetivo general**
+
+Determinar la categoría de motorización (eléctrica, híbrida o combustible fósil) que presenta la mejor relación calidad-precio en el mercado automotriz, basándose en un análisis descriptivo de las características del "cars dataset 2025"
+
+## **Objetivos específicos**
+
+1. Clasificar los vehículos del dataset en tres grupos: Eléctrico, Híbrido y Combustible Fósil _(Gasolina/Diésel)_.
+
+2. Calcular y comparar los estadísticos descriptivos _(media, mediana, desviación estándar)_ para el precio y el índice de calidad-precio en cada una de las tres categorías.
+
+3. Identificar y reportar la categoría de motorización que obtiene el valor medio más alto en el índice de calidad-precio.
+
+# ANALISIS POR SEGMENTOS
 
 # TOP 10 MEJORES CARROS CALIDAD/PRECIO
 Este es un ranking basado en el índice QPR (puntos de calidad por cada $1,000 USD), para asi encontrar a los vehículos con mayor eficiencia en calidad-precio del mercado.
@@ -63,7 +90,7 @@ Esto nos dice:
 Más alto el QPR = Más rendimiento por tu dinero.
 
 Más bajo el QPR = Menos eficiencia en lo que pagas.
-```{r TOP_10_QPR}
+```{r TOP_10_QPR, echo=FALSE, warning=FALSE}
 # Limpieza, Conversión y Cálculo
 data_qpr <- data_carros %>%
   # Limpieza del Precio 
@@ -116,7 +143,7 @@ print(top_10_qpr)
 ```
 
 
-```{r TOP_10_QPR_GRAFICO}
+```{r TOP_10_QPR_GRAFICO, echo=FALSE}
 # Grafico del top 10
 
 top_10_plot <- top_10_qpr %>%
@@ -167,7 +194,7 @@ Bloque de Comparativa y Promedios por Marca
 
 Este bloque calcula el QPR promedio, el precio promedio y el número de modelos por cada fabricante, y selecciona las 10 marcas con mejor QPR.
 
-```{r brand_comparison}
+```{r brand_comparison, echo=FALSE}
 # Agrupamos los datos por Fabricante y calculamos los promedios
 brand_qpr_summary <- data_qpr %>%
   group_by(Company.Names) %>%
@@ -189,7 +216,9 @@ print(brand_qpr_summary)
 
 # Gráfico de QPR Promedio por Marca
 
-```{r plot_brand_qpr}
+```
+
+```{r plot_brand_qpr, echo=FALSE}
 # Preparamos los datos para el gráfico, ordenando las marcas para la visualización
 brand_plot <- brand_qpr_summary %>%
   arrange(QPR_Promedio) %>%
@@ -222,6 +251,7 @@ grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
 
 # Mostrar el gráfico
 print(grafico_marcas)
+```
 
 
 
