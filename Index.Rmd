@@ -167,7 +167,7 @@ Bloque de Comparativa y Promedios por Marca
 
 Este bloque calcula el QPR promedio, el precio promedio y el número de modelos por cada fabricante, y selecciona las 10 marcas con mejor QPR.
 
-```{r brand_comparison}
+```{r Comparativa_por_marcas}
 # Agrupamos los datos por Fabricante y calculamos los promedios
 brand_qpr_summary <- data_qpr %>%
   group_by(Company.Names) %>%
@@ -185,11 +185,11 @@ brand_qpr_summary <- data_qpr %>%
 
 # Mostramos la tabla resumen de las 10 mejores marcas
 print(brand_qpr_summary)
+```
 
-
+```{r Comparativa_por_marcas_grafico}
 # Gráfico de QPR Promedio por Marca
 
-```{r plot_brand_qpr}
 # Preparamos los datos para el gráfico, ordenando las marcas para la visualización
 brand_plot <- brand_qpr_summary %>%
   arrange(QPR_Promedio) %>%
@@ -222,11 +222,49 @@ grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
 
 # Mostrar el gráfico
 print(grafico_marcas)
+```
 
+# ANALISIS POR COMBUSTIBLE
 
+```{r Analisis_Por_Combustible}
+# Agrupamos los datos por Tipo de Combustible
+fuel_qpr_summary <- data_qpr %>%
+group_by(Fuel.Types) %>%
+summarise(
+Modelos = n(),
+QPR_Promedio = mean(QPR, na.rm = TRUE),
+Precio_Promedio_USD = mean(Price_Avg, na.rm = TRUE)
+) %>%
+arrange(desc(QPR_Promedio)) %>%
+rename(Motorización = Fuel.Types)
 
-#ANALISIS POR COMBUSTIBLE
+# Mostrar Tabla de Combustible
+print(fuel_qpr_summary)
 
+# Preparación y Gráfico de Combustible
+color_map_fuel <- c("Petrol" = "#FFD700", "Hybrid" = "#1E90FF", "Diesel" = "#A9A9A9", "plug in hyrbrid" = "#00BFFF")
 
+fuel_plot <- fuel_qpr_summary %>%
+arrange(QPR_Promedio) %>%
+mutate(Motorización = factor(Motorización, levels = Motorización))
+
+grafico_combustible <- ggplot(fuel_plot, aes(x = Motorización, y = QPR_Promedio, fill = Motorización)) +
+geom_bar(stat = "identity", color = "black", width = 0.7) +
+geom_text(aes(label = sprintf("%.2f", QPR_Promedio)), hjust = -0.1, size = 4, fontface = "bold") +
+labs(title = "Relación Calidad-Precio (QPR) Promedio por Tipo de Combustible",
+subtitle = "El mejor valor promedio entre tecnologías",
+x = "Tipo de Motorización",
+y = "QPR Promedio (Puntos/1k USD)") +
+coord_flip() +
+scale_fill_manual(values = color_map_fuel) +
+theme_minimal() +
+theme(
+plot.title = element_text(hjust = 0, size = 16, face = "bold"),
+axis.text.y = element_text(size = 10, face = "bold"),
+legend.position = "none"
+ )
+
+print(grafico_combustible)
+```
 
 #CONCLUSIONES Y RECOMENDACIONES
