@@ -48,6 +48,24 @@ Determinar la categoría de motorización (eléctrica, híbrida o combustible f�
 
 3. Identificar y reportar la categoría de motorización que obtiene el valor medio más alto en el índice de calidad-precio.
 
+# **Marco de referencia** 
+
+## **Marco teórico**
+
+El análisis descriptivo se fundamenta en la hipótesis de que la eficiencia de costo por unidad de potencia **RCP** variará significativamente entre las tres categorías de motorización. Se espera que los vehículos con tecnología más establecida _(Combustible Fósil)_ puedan ofrecer un **RCP** alto debido a los menores costos de producción en comparación con las tecnologías de baterías _(Híbridos y Eléctricos)_, aunque el estudio busca identificar el grupo con el valor medio de **RCP** más alto.
+
+La Relación Calidad-Precio **(RCP)**, o Value for Money, es la métrica fundamental de este análisis. Se define operacionalmente como la razón entre la variable de rendimiento _(calidad)_ y el precio: 
+
+Índice de calidad-precio = Horses Power/Cars Price$
+
+Un valor más alto en este índice indica una mejor relación calidad-precio, ya que el vehículo ofrece mayor potencia _(calidad)_ por cada unidad de costo _(precio)_.
+
+## **Marco metodológico**
+
+### **Fuente de datos**
+
+Se utiliza el conjunto de datos Cars_Datasets_2025.csv, que contiene registros de precio, marca, motorizacion y potencia _(Horses Power)_.
+
 # ANALISIS POR SEGMENTOS
 
 # TOP 10 MEJORES CARROS CALIDAD/PRECIO
