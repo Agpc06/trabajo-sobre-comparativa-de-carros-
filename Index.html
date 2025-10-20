@@ -2879,18 +2879,72 @@ alto.</p>
 es la métrica fundamental de este análisis. Se define operacionalmente
 como la razón entre la variable de rendimiento <em>(calidad)</em> y el
 precio:</p>
-<p>Índice de calidad-precio = Horses Power/Cars Price$</p>
+<p><span class="math display">\[\text{índice de
+Calidad-Precio}=\frac{\text{HorsePower}}{\text{Cars
+Prices}}\]</span></p>
 <p>Un valor más alto en este índice indica una mejor relación
 calidad-precio, ya que el vehículo ofrece mayor potencia
 <em>(calidad)</em> por cada unidad de costo <em>(precio)</em>.</p>
 </div>
 <div id="marco-metodológico" class="section level2">
 <h2><strong>Marco metodológico</strong></h2>
+<div id="enfoque-y-tipo-de-investigación" class="section level3">
+<h3><strong>Enfoque y tipo de investigación</strong></h3>
+<p>El estudio empleará un enfoque cuantitativo para llevar a cabo una
+investigación descriptiva y comparativa.</p>
+<p>Enfoque Cuantitativo: Permite la manipulación y el análisis de datos
+numéricos del dataset <em>(precio, índice de calidad-precio)</em>
+mediante técnicas estadísticas <em>(media, mediana, desviación
+estándar)</em> para obtener resultados.</p>
+<p>Investigación Descriptiva y Comparativa: Se utilizará la fase
+descriptiva para caracterizar estadísticamente a cada categoría de
+motorización <em>(Eléctrico, Híbrido, Combustible Fósil)</em>. La fase
+comparativa es esencial para contrastar estos datos e identificar la
+categoría que presenta el valor medio más alto en la relación
+calidad-precio.</p>
+</div>
 <div id="fuente-de-datos" class="section level3">
 <h3><strong>Fuente de datos</strong></h3>
 <p>Se utiliza el conjunto de datos Cars_Datasets_2025.csv, que contiene
 registros de precio, marca, motorizacion y potencia <em>(Horses
 Power)</em>.</p>
+</div>
+<div id="período-de-referencia" class="section level3">
+<h3><strong>Período de referencia</strong></h3>
+<p>El análisis se centra en el mercado automotriz de 2025. Por lo tanto,
+la investigación y sus conclusiones estan ancladas a la información y de
+los datos disponibles para el año 2025.</p>
+</div>
+<div id="procesamiento-y-análisis-de-datos" class="section level3">
+<h3><strong>Procesamiento y análisis de datos</strong></h3>
+<ol style="list-style-type: decimal">
+<li>Preprocesamiento y Cálculo de Variables</li>
+</ol>
+<p>· Limpieza de datos: Se convirtieron precios <em>(eliminando “$”,
+comas)</em> y especificaciones técnicas <em>(caballos de fuerza,
+velocidad, aceleración)</em> a valores numéricos. · Manejo de datos
+faltantes: Se eliminaron registros incompletos o con precio cero. ·
+Métricas clave: · Índice de Calidad: Combina potencia, velocidad y
+aceleración <em>(HP + Velocidad - 10×Aceleración)</em> · Relación QPR:
+(Calidad/Precio)×1000 - representa puntos de calidad por cada $1,000
+USD</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Análisis Individual por Modelo <em>(Top 10)</em></li>
+</ol>
+<p>· Se identificaron los 10 modelos con mejor relación calidad-precio ·
+Visualización con gráfico de barras horizontal, diferenciando por tipo
+de motorización</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Análisis Comparativo por Marca</li>
+</ol>
+<p>· Agregación por fabricante, calculando promedios de QPR y precio ·
+Filtro de robustez: solo marcas con ≥2 modelos · Identificación del Top
+10 de marcas con mejor QPR promedio · Visualización similar con gráfico
+de barras horizontal</p>
+<p>Propósito: Identificar los vehículos y marcas que ofrecen mejor
+rendimiento por unidad de precio invertido, utilizando métricas
+estandarizadas y análisis a dos niveles <em>(modelo individual y
+comparativa de fabricantes)</em>.</p>
 </div>
 </div>
 </div>

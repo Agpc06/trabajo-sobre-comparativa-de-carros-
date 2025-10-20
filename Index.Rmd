@@ -56,15 +56,51 @@ El análisis descriptivo se fundamenta en la hipótesis de que la eficiencia de 
 
 La Relación Calidad-Precio **(RCP)**, o Value for Money, es la métrica fundamental de este análisis. Se define operacionalmente como la razón entre la variable de rendimiento _(calidad)_ y el precio: 
 
-Índice de calidad-precio = Horses Power/Cars Price$
+$$\text{índice de Calidad-Precio}=\frac{\text{HorsePower}}{\text{Cars Prices}}$$
 
 Un valor más alto en este índice indica una mejor relación calidad-precio, ya que el vehículo ofrece mayor potencia _(calidad)_ por cada unidad de costo _(precio)_.
 
 ## **Marco metodológico**
 
+### **Enfoque y tipo de investigación**
+
+El estudio empleará un enfoque cuantitativo para llevar a cabo una investigación descriptiva y comparativa.
+
+Enfoque Cuantitativo: Permite la manipulación y el análisis de datos numéricos del dataset _(precio, índice de calidad-precio)_ mediante técnicas estadísticas _(media, mediana, desviación estándar)_ para obtener resultados.
+
+Investigación Descriptiva y Comparativa: Se utilizará la fase descriptiva para caracterizar estadísticamente a cada categoría de motorización _(Eléctrico, Híbrido, Combustible Fósil)_. La fase comparativa es esencial para contrastar estos datos e identificar la categoría que presenta el valor medio más alto en la relación calidad-precio.
+
 ### **Fuente de datos**
 
 Se utiliza el conjunto de datos Cars_Datasets_2025.csv, que contiene registros de precio, marca, motorizacion y potencia _(Horses Power)_.
+
+### **Período de referencia**
+
+El análisis se centra en el mercado automotriz de 2025. Por lo tanto, la investigación y sus conclusiones estan ancladas a la información y de los datos disponibles para el año 2025.
+
+### **Procesamiento y análisis de datos**
+
+1. Preprocesamiento y Cálculo de Variables
+
+· Limpieza de datos: Se convirtieron precios _(eliminando "$", comas)_ y especificaciones técnicas _(caballos de fuerza, velocidad, aceleración)_ a valores numéricos.
+· Manejo de datos faltantes: Se eliminaron registros incompletos o con precio cero.
+· Métricas clave:
+  · Índice de Calidad: Combina potencia, velocidad y aceleración _(HP + Velocidad - 10×Aceleración)_
+  · Relación QPR: (Calidad/Precio)×1000 - representa puntos de calidad por cada $1,000 USD
+
+2. Análisis Individual por Modelo _(Top 10)_
+
+· Se identificaron los 10 modelos con mejor relación calidad-precio
+· Visualización con gráfico de barras horizontal, diferenciando por tipo de motorización
+
+3. Análisis Comparativo por Marca
+
+· Agregación por fabricante, calculando promedios de QPR y precio
+· Filtro de robustez: solo marcas con ≥2 modelos
+· Identificación del Top 10 de marcas con mejor QPR promedio
+· Visualización similar con gráfico de barras horizontal
+
+Propósito: Identificar los vehículos y marcas que ofrecen mejor rendimiento por unidad de precio invertido, utilizando métricas estandarizadas y análisis a dos niveles _(modelo individual y comparativa de fabricantes)_.
 
 # ANALISIS POR SEGMENTOS
 
