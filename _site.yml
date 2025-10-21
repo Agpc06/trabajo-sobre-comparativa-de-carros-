@@ -1,0 +1,10 @@
+name: "analisis-coches-qpr"
+output_dir: "docs" # Directorio de publicación para Render.
+navbar:
+  title: "Análisis QPR Autos"
+  left:
+    - text: "Informe"
+      href: index.html
+output:
+  html_document:
+    theme: cosmo # Usando el tema que especificaste en tu Rmd
