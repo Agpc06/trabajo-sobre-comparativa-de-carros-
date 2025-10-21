@@ -64,22 +64,99 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 ```
-# INTRODUCCION
+# **INTRODUCCION**
 
+En el mercado automotriz de hoy, tomar una buena decisión de compra no se trata solo de ver qué coche tiene el precio más bajo, ni tampoco el que tiene más caballos. Se trata de encontrar el punto perfecto entre el precio y lo que el coche realmente ofrece. ¿Estamos pagando por el valor real o solo por el nombre de la marca?
 
-# METODOLOGIA
+Este estudio se centra en responder esa pregunta usando una métrica clave: la Relación Calidad-Precio (QPR). El QPR no es más que una forma de medir, de manera justa y objetiva, cuántos puntos de rendimiento técnico (potencia, velocidad, eficiencia, etc.) recibes por cada unidad de dinero invertida.
 
+¿Qué vamos a ver en este análisis?
+Nuestro objetivo principal es ir más allá de los números obvios y descubrir dónde está el verdadero valor. Para eso, el informe está estructurado en tres partes clave:
 
-# ANALISIS POR SEGMENTOS
+Top 10 de Modelos: Identificamos cuáles son los 10 vehículos individuales que, según el QPR, te dan el mejor negocio en el mercado actual.
 
-# TOP 10 MEJORES CARROS CALIDAD/PRECIO
+Análisis por Fabricante: Dejamos de lado los modelos individuales y vemos qué marcas son las más consistentes. ¿Qué fabricante, en promedio, ofrece el mejor valor a sus clientes?
+
+Comparativa Tecnológica: Agrupamos las motorizaciones en categorías simples (Fósil, Híbrido y Eléctrico) para ver cuál de ellas es la inversión más inteligente a nivel tecnológico y económico
+
+# **PLANTEAMIENTO DEL PROBLEMA**
+
+La industria automotriz está en una transición. Los vehículos eléctricos e híbridos han crecido en popularidad, pero a menudo se perciben como opciones más caras. Esta percepción plantea una pregunta crítica para los consumidores: ¿Cuál de las tres principales tecnologías de motorización _(eléctrico, híbrido o de combustible fósil)_ ofrece la mejor relación calidad-precio, considerando el rendimiento del motor frente a su costo de compra inicial?
+
+## **Objetivo general**
+
+Determinar la categoría de motorización (eléctrica, híbrida o combustible fósil) que presenta la mejor relación calidad-precio en el mercado automotriz, basándose en un análisis descriptivo de las características del "cars dataset 2025"
+
+## **Objetivos específicos**
+
+1. Clasificar los vehículos del dataset en tres grupos: Eléctrico, Híbrido y Combustible Fósil _(Gasolina/Diésel)_.
+
+2. Calcular y comparar los estadísticos descriptivos _(media, mediana, desviación estándar)_ para el precio y el índice de calidad-precio en cada una de las tres categorías.
+
+3. Identificar y reportar la categoría de motorización que obtiene el valor medio más alto en el índice de calidad-precio
+
+## **Marco teórico**
+
+El análisis descriptivo se fundamenta en la hipótesis de que la eficiencia de costo por unidad de potencia **RCP** variará significativamente entre las tres categorías de motorización. Se espera que los vehículos con tecnología más establecida _(Combustible Fósil)_ puedan ofrecer un **RCP** alto debido a los menores costos de producción en comparación con las tecnologías de baterías _(Híbridos y Eléctricos)_, aunque el estudio busca identificar el grupo con el valor medio de **RCP** más alto.
+
+La Relación Calidad-Precio **(RCP)**, o Value for Money, es la métrica fundamental de este análisis. Se define operacionalmente como la razón entre la variable de rendimiento _(calidad)_ y el precio: 
+
+$$\text{índice de Calidad-Precio}=\frac{\text{HorsePower}}{\text{Cars Prices}}$$
+
+Un valor más alto en este índice indica una mejor relación calidad-precio, ya que el vehículo ofrece mayor potencia _(calidad)_ por cada unidad de costo _(precio)_.
+
+## **Marco metodológico**
+
+### **Enfoque y tipo de investigación**
+
+El estudio empleará un enfoque cuantitativo para llevar a cabo una investigación descriptiva y comparativa.
+
+Enfoque Cuantitativo: Permite la manipulación y el análisis de datos numéricos del dataset _(precio, índice de calidad-precio)_ mediante técnicas estadísticas _(media, mediana, desviación estándar)_ para obtener resultados.
+
+Investigación Descriptiva y Comparativa: Se utilizará la fase descriptiva para caracterizar estadísticamente a cada categoría de motorización _(Eléctrico, Híbrido, Combustible Fósil)_. La fase comparativa es esencial para contrastar estos datos e identificar la categoría que presenta el valor medio más alto en la relación calidad-precio.
+
+### **Fuente de datos**
+
+Se utiliza el conjunto de datos Cars_Datasets_2025.csv, que contiene registros de precio, marca, motorizacion y potencia _(Horses Power)_.
+
+### **Período de referencia**
+
+El análisis se centra en el mercado automotriz de 2025. Por lo tanto, la investigación y sus conclusiones estan ancladas a la información y de los datos disponibles para el año 2025.
+
+### **Procesamiento y análisis de datos**
+
+1. Preprocesamiento y Cálculo de Variables
+
+· Limpieza de datos: Se convirtieron precios _(eliminando "$", comas)_ y especificaciones técnicas _(caballos de fuerza, velocidad, aceleración)_ a valores numéricos.
+· Manejo de datos faltantes: Se eliminaron registros incompletos o con precio cero.
+· Métricas clave:
+  · Índice de Calidad: Combina potencia, velocidad y aceleración _(HP + Velocidad - 10×Aceleración)_
+  · Relación QPR: (Calidad/Precio)×1000 - representa puntos de calidad por cada $1,000 USD
+
+2. Análisis Individual por Modelo _(Top 10)_
+
+· Se identificaron los 10 modelos con mejor relación calidad-precio
+· Visualización con gráfico de barras horizontal, diferenciando por tipo de motorización
+
+3. Análisis Comparativo por Marca
+
+· Agregación por fabricante, calculando promedios de QPR y precio
+· Filtro de robustez: solo marcas con ≥2 modelos
+· Identificación del Top 10 de marcas con mejor QPR promedio
+· Visualización similar con gráfico de barras horizontal
+
+Propósito: Identificar los vehículos y marcas que ofrecen mejor rendimiento por unidad de precio invertido, utilizando métricas estandarizadas y análisis a dos niveles _(modelo individual y comparativa de fabricantes)_.
+
+# **ANALISIS POR SEGMENTOS**
+
+## **TOP 10 MEJORES CARROS CALIDAD/PRECIO**
 Este es un ranking basado en el índice QPR (puntos de calidad por cada $1,000 USD), para asi encontrar a los vehículos con mayor eficiencia en calidad-precio del mercado.
 A través de este estudio, identificamos no solo los vehículos con el mejor balance, sino que ademas aquellos cuyo alto precio no necesariamente se traduce en una superioridad en calidad, guiando tu decisión hacia la mejor desicion de compra.
 
 Ahora bien, ¿cómo vamos a saber qué carro es más rentable que otro?
 Los gustos personales y las percepciones de lo “superior” varían enormemente entre compradores. Por eso, para eliminar subjetividades y ofrecer una evaluación justa y comparable, desarrollamos una fórmula basada en datos técnicos que asigna puntos de calidad a cada vehículo.
 
-## Paso 1 crear la Fórmula:  
+### **Paso 1 crear la Fórmula:**  
 Puntos de Calidad = Potencia + Velocidad Máxima – (10 × Aceleración 0-100 km/h)
 
 ¿Por qué estos tres factores?
@@ -100,7 +177,7 @@ Ejemplo:
 Un auto con 150 cv, 200 km/h de velocidad máxima y aceleración de 8 segundos tendría:
 Puntos de Calidad = 150 + 200 – (10 × 8) = 270 puntos
 
-## Paso 2: La Relación Calidad-Precio (QPR)
+### **Paso 2: La Relación Calidad-Precio**
 
 Pero no basta con saber cuánto rinde un auto, ¿Vale la pena pagar su precio?,
 para responder esto, convertimos los Puntos de Calidad en rentabilidad real:
@@ -152,7 +229,6 @@ names(top_10_qpr) <- c("Fabricante", "Modelo", "Motorización", "Precio Promedio
 print(top_10_qpr)
 ```
 
-
 ```{r TOP_10_QPR_GRAFICO}
 # Grafico del top 10
 
@@ -187,7 +263,18 @@ print(grafico_qpr)
 
 ```
 
-# COMPARATIVA POR MARCAS
+# **COMPARATIVA POR MARCAS**
+
+Analizamos el QPR Promedio (Relación Calidad-Precio) de cada fabricante. Para garantizar la robustez del análisis, solo se incluyen las marcas con dos o más modelos en nuestro conjunto de datos, lo que asegura que el promedio refleje una tendencia de producción consistente y no una simple anomalía estadística.
+
+Interpretación del QPR Agregado
+El QPR Promedio por Fabricante es un indicador directo de la eficiencia de una marca en el mercado:
+
+Alto QPR Promedio: Indica que el fabricante ha optimizado de manera consistente la relación entre rendimiento técnico y coste de adquisición a través de su línea de vehículos. Estas marcas se posicionan como líderes en ofrecer el mejor valor por el dinero invertido.
+
+Bajo QPR Promedio: Sugiere que el precio de los vehículos no se justifica consistentemente con las métricas de calidad y rendimiento (Potencia, Velocidad, Aceleración), lo que podría señalar un sobreprecio asociado a la percepción de marca o a estructuras de costes menos eficientes.
+
+Los siguientes resultados exponen el Top 10 de fabricantes que demuestran el liderazgo más notable en ofrecer un valor superior en el mercado global.
 
 ```{r COMPARATIVA_MARCAS}
 # Agrupamos los datos por Fabricante y calculamos los promedios
@@ -203,22 +290,27 @@ brand_qpr_summary <- data_qpr %>%
   head(10) %>%
   rename(Fabricante = Company.Names)
 
+# Mostramos la tabla resumen de las 10 mejores marcas
 print(brand_qpr_summary)
+```
 
+```{r GRAFICO_COMPARATIVA_POR_MARCAS}
+# Preparamos los datos para el gráfico, ordenando las marcas para la visualización
 brand_plot <- brand_qpr_summary %>%
   arrange(QPR_Promedio) %>%
   mutate(Fabricante = factor(Fabricante, levels = Fabricante))
+
 grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
   geom_bar(stat = "identity", fill = "#1E90FF", color = "black", width = 0.7) +
+  
   geom_text(aes(label = sprintf("%.2f", QPR_Promedio)), 
             hjust = -0.1, size = 4, fontface = "bold") +
   
-  labs(title = "Top 10: Relación QRP Promedio por Marca",
+  labs(title = "Top 10: Relación Calidad-Precio Promedio por Marca",
        subtitle = "Basado en el QPR promedio de todos sus modelos (solo marcas con >= 2 modelos)",
        x = "Fabricante",
        y = "QPR Promedio (Puntos/1k USD)") +
-  
-  # Invertir coordenadas para un gráfico de barras horizontal más legible
+
   coord_flip() +
   
   theme_minimal() +
@@ -233,46 +325,72 @@ grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
 print(grafico_marcas)
 ```
 
-# ANALISIS POR COMBUSTIBLE
+# **ANALISIS POR COMBUSTIBLE**
+Esta sección agrupa las tecnologías de propulsión para obtener una visión macro del rendimiento y el valor que ofrecen. Hemos simplificado las categorías para enfocarnos en los tres grandes segmentos del mercado: Fósil (Gasolina y Diésel), Híbrido (Híbrido convencional y Plug-in Hybrid), y Eléctrico.
 
-```{r ANALISIS_POR_COMBUSTIBLE}
+El objetivo es determinar qué tecnología, en promedio, ofrece la mejor Relación Calidad-Precio (QPR) y dónde se concentran los fabricantes más eficientes.
+```{r ANALISIS_COMBUSTIBLE, echo=FALSE, fig.height=6}
+# Definición de la paleta de colores (simplificada)
+color_map_simple <- c("Fósil" = "#FFD700", "Híbrido" = "#1E90FF", "Eléctrico" = "#3CB371")
+
+#  Cálculo
 fuel_qpr_summary <- data_qpr %>%
-  group_by(Fuel.Types) %>%
-  summarise(
-    Modelos = n(),
-    QPR_Promedio = mean(QPR, na.rm = TRUE),
-    Precio_Promedio_USD = mean(Price_Avg, na.rm = TRUE)
-  ) %>%
-  arrange(desc(QPR_Promedio)) %>%
-  rename(Motorización = Fuel.Types)
+ mutate(
+ Motorizacion = case_when(
+ Fuel.Types %in% c("Petrol", "Diesel") ~ "Fósil",
+ Fuel.Types %in% c("Hybrid", "plug in hyrbrid") ~ "Híbrido",
+ TRUE ~ "Eléctrico"
+ )
+ ) %>%
+group_by(Motorizacion) %>%
+summarise(
+Modelos = n(),
+QPR_Promedio = mean(QPR, na.rm = TRUE)
+) %>%
+arrange(desc(QPR_Promedio))
 
-print(fuel_qpr_summary)
-
-# Gráfico de Combustible
-color_map_fuel <- c("Petrol" = "#FFD700", "Hybrid" = "#1E90FF", "Diesel" = "#A9A9A9", "plug in hyrbrid" = "#00BFFF")
-
-fuel_plot <- fuel_qpr_summary %>%
-  arrange(QPR_Promedio) %>%
-  mutate(Motorización = factor(Motorización, levels = Motorización))
-
-grafico_combustible <- ggplot(fuel_plot, aes(x = Motorización, y = QPR_Promedio, fill = Motorización)) +
-  geom_bar(stat = "identity", color = "black", width = 0.7) +
-  geom_text(aes(label = sprintf("%.2f", QPR_Promedio)),
-            hjust = -0.1, size = 4, fontface = "bold") +
-  labs(title = "Relación QRP Promedio por Tipo de Combustible",
-       subtitle = "El mejor valor promedio entre tecnologías",
-       x = "Tipo de Motorización",
-       y = "QPR Promedio (Puntos/1k USD)") +
-  coord_flip() +
-  scale_fill_manual(values = color_map_fuel) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0, size = 16, face = "bold"),
-    axis.text.y = element_text(size = 10, face = "bold"),
-    legend.position = "none"
+# TABLA
+fuel_qpr_summary %>%
+  knitr::kable(
+    caption = "**QPR Promedio por Tipo de Motorización Simplificado**",
+    digits = 2,
+    col.names = c("Motorización", "Modelos", "QPR Promedio")
   )
+
+# GRÁFICO
+grafico_combustible <- fuel_qpr_summary %>%
+arrange(QPR_Promedio) %>%
+mutate(Motorizacion = factor(Motorizacion, levels = Motorizacion)) %>%
+ggplot(aes(x = Motorizacion, y = QPR_Promedio, fill = Motorizacion)) +
+geom_bar(stat = "identity", color = "black", width = 0.7) +
+geom_text(aes(label = sprintf("%.2f", QPR_Promedio)), hjust = -0.1, size = 4) +
+labs(title = "QPR Promedio por Tipo de Motorización", x = NULL, y = "QPR Promedio (Puntos/1k USD)") +
+coord_flip() +
+scale_fill_manual(values = color_map_simple) +
+theme_classic() +
+theme(legend.position = "none")
+
 
 print(grafico_combustible)
 ```
 
-# CONCLUSIONES Y RECOMENDACIONES
+# **CONCLUSIONES Y RECOMENDACIONES**
+
+**El Ganador del Valor QRP**
+
+Vimos claramente que tener el QPR más alto no es cosa de marcas de lujo. Los modelos que ganan son los que te dan más caballos, velocidad y calidad por cada euro/dólar que pagas. Esto prueba que el valor está en la ingeniería inteligente, no solo en el precio.
+
+**La Marca Estándar es la Jefa:**
+Las marcas que ganan en el QPR Promedio (las más consistentes) son las que tienen su proceso de producción súper optimizado. Saben meter buen equipamiento sin que el precio se dispare. 
+
+**El Balance de la Motorización:**
+
+La tecnología de motorización que se llevó el mejor QPR promedio Nissan Urvan ha encontrado el punto perfecto. Son lo suficientemente nuevas para ser eficientes, pero sus precios ya no están por las nubes. 
+
+**No Pagues Demás:**
+
+Si quieres el mejor valor, ignora la publicidad y mira la tabla del Top 10 de QPR. Esos modelos son los que te van a dar el mejor coche por tu dinero.
+
+**Revisa la Tecnología:** 
+
+Si vas a cambiar a un coche [ej: Híbrido o Eléctrico], compara su QPR con los de gasolina. Asegúrate de que estás pagando por beneficios reales y no solo por la moda. La tecnología ganadora es la que, en promedio, te da el mejor rendimiento.
