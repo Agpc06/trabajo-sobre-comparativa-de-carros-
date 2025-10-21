@@ -166,7 +166,7 @@ grafico_qpr <- ggplot(top_10_plot, aes(x = Label, y = `Relación QPR (Puntos/1k 
             hjust = -0.1, size = 3.5, fontface = "bold") +
   
   # estética y etiquetas
-  labs(title = "Top 10: Análisis Comparativo de la Relación Calidad-Precio (QPR)",
+  labs(title = "Top 10: Análisis Comparativo de QPR",
        subtitle = "Puntos de Calidad por cada $1000 USD (Mercado Global 2025)",
        x = "Vehículo (Fabricante y Modelo)",
        y = "Relación Calidad-Precio (QPR)") +
@@ -199,18 +199,12 @@ brand_qpr_summary <- data_qpr %>%
     Precio_Promedio_USD = mean(Price_Avg, na.rm = TRUE)
   ) %>%
   filter(Modelos >= 2) %>%
-  # Ordenamos por el QPR Promedio de forma descendente
   arrange(desc(QPR_Promedio)) %>%
   head(10) %>%
   rename(Fabricante = Company.Names)
 
-# Mostramos la tabla resumen de las 10 mejores marcas
 print(brand_qpr_summary)
 
-
-#  Gráfico de QPR Promedio por Marca
-
-# Preparamos los datos para el gráfico, ordenando las marcas para la verlas
 brand_plot <- brand_qpr_summary %>%
   arrange(QPR_Promedio) %>%
   mutate(Fabricante = factor(Fabricante, levels = Fabricante))
@@ -219,7 +213,7 @@ grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
   geom_text(aes(label = sprintf("%.2f", QPR_Promedio)), 
             hjust = -0.1, size = 4, fontface = "bold") +
   
-  labs(title = "Top 10: Relación Calidad-Precio Promedio por Marca",
+  labs(title = "Top 10: Relación QRP Promedio por Marca",
        subtitle = "Basado en el QPR promedio de todos sus modelos (solo marcas con >= 2 modelos)",
        x = "Fabricante",
        y = "QPR Promedio (Puntos/1k USD)") +
@@ -239,7 +233,8 @@ grafico_marcas <- ggplot(brand_plot, aes(x = Fabricante, y = QPR_Promedio)) +
 print(grafico_marcas)
 ```
 
-# ANALISIS POR COMBUSTIBLE 
+# ANALISIS POR COMBUSTIBLE
+
 ```{r ANALISIS_POR_COMBUSTIBLE}
 fuel_qpr_summary <- data_qpr %>%
   group_by(Fuel.Types) %>%
@@ -279,4 +274,5 @@ grafico_combustible <- ggplot(fuel_plot, aes(x = Motorización, y = QPR_Promedio
 
 print(grafico_combustible)
 ```
+
 # CONCLUSIONES Y RECOMENDACIONES
