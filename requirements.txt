@@ -1,6 +1,0 @@
-streamlit
-pandas 
-numpy 
-plotly.express 
-re 
-plotly.graph_objects 
