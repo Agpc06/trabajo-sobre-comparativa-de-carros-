@@ -55,8 +55,7 @@ cat('</style>')
 ```
 
 ```{r load_data, include=FALSE}
-ruta_data_carros<- file.choose()
-data_carros <- read.csv("C:\\Users\\elang\\Documents\\Proyecto final\\Cars Datasets 2025.csv")
+data_carros <- read.csv("Cars Datasets 2025.csv")
 ```
 
 ```{r librerias, include=FALSE}
