@@ -1,4 +1,6 @@
 streamlit
-pandas
-numpy
-ploty
+pandas 
+numpy 
+plotly.express 
+re 
+plotly.graph_objects 
