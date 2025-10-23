@@ -41,7 +41,7 @@ st.sidebar.markdown("---")
 
 try:
     
-    data_carros = pd.read_csv('Cars Datasets 2025.csv', encoding='latin-1') 
+    data_carros = pd.read_csv('c:\\Users\\elang\\Downloads\\app.py\\Cars Datasets 2025.csv', encoding='latin-1') 
     
 except FileNotFoundError:
     st.error("❌ Error: Archivo 'Cars Datasets 2025.csv' no encontrado. Asegúrate de que el archivo esté en la misma carpeta.")
