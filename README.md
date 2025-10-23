@@ -11,8 +11,6 @@ En el mercado automotriz de hoy, tomar una buena decisión de compra no se trata
 
 Este estudio se centra en responder esa pregunta usando una métrica clave: la Relación Calidad-Precio (QPR). El QPR no es más que una forma de medir, de manera justa y objetiva, cuántos puntos de rendimiento técnico (potencia, velocidad, eficiencia, etc.) recibes por cada unidad de dinero invertida.
 
-
 # Informe dinamico de Rmarkdawn: https://dashboard-rmarkdown.onrender.com
-
 
 # Informe dinamico Python: https://trabajo-sobre-comparativa-de-carros.onrender.com
